@@ -7,7 +7,7 @@
 void help() {
         printf("This program is designed to have a parent process call a child process.\n");
         printf("The executable takes three flags: [-n proc], [-s simul], and [-t iter].\n");
-        printf("Add more here when you know the specifics of how your program will run.");
+        printf("Add more here when you know the specifics of how your program will run.\n");
 }
 
 int main(int argc, char** argv) {
@@ -35,8 +35,7 @@ int main(int argc, char** argv) {
 	if (childPid == 0) {
 		printf("I am a child but a copy of parent! My parent's PID is %d, and my PID is %d\n",
     		getppid(), getpid());
-    		char* args[] = {"./child", "Hello",
-    		"there", "exec", "is", "neat", 0};
+    		char* args[] = {"./worker", "Hello", "there", "exec", "is", "neat", NULL};
     		//execvp(args[0], args);
     		execlp(args[0],args[0],args[1],args[2],args[3],args[4],args[5],args[6],NULL);
     		fprintf(stderr,"Exec failed, terminating\n");
