@@ -37,12 +37,10 @@ int main(int argc, char** argv) {
 	printf("iter: %s\n", iter);
 
 	if (childPid == 0) {
-		printf("Child pid detected, sending to child\n");
 		execlp("./worker", iter, NULL);
     		fprintf(stderr,"Exec failed, terminating\n");
     		exit(1);
   	} else {
-    		printf("Back in parent\n");
     		//sleep(1);
     		wait(0);
   	}
