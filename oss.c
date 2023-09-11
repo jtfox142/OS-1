@@ -31,20 +31,35 @@ int main(int argc, char** argv) {
 				break;
 		}
 	}
-	pid_t childPid = fork(); // This is where the child process splits from the parent
+	int totalChildren;
+	int runningChildren;
+	totalChildren = 0;
+	runningChildren = 0;
+
 	printf("proc: %d\n", proc);
 	printf("simul: %d\n", simul);
 	printf("iter: %s\n", iter);
 
-	if (childPid == 0) {
-		execlp("./worker", iter, NULL);
-    		fprintf(stderr,"Exec failed, terminating\n");
-    		exit(1);
-  	} else {
-    		//sleep(1);
-    		wait(0);
-  	}
-  	printf("Parent is now ending.\n");
+    	while(totalChildren < proc) {
+		printf("Running Children: %d\n", runningChildren);
+    
+		pid_t childPid = fork();
+		totalChildren++;
+		runningChildren++;
+
+		if(childPid == 0) {
+			execlp("./worker", iter, NULL);
+			exit(1);
+		}
+		else{
+			if(runningChildren >= simul) {
+				wait(0);
+				runningChildren--;
+			}
+		}
+	}
+	wait(0);
+	printf("Parent is now ending.\n");
   	return EXIT_SUCCESS;
 }
 
