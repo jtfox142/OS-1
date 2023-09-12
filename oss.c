@@ -33,6 +33,7 @@ int main(int argc, char** argv) {
 	}
 	int totalChildren;
 	int runningChildren;
+	int finalChild;
 	totalChildren = 0;
 	runningChildren = 0;
 
@@ -44,6 +45,7 @@ int main(int argc, char** argv) {
 		printf("Running Children: %d\n", runningChildren);
     
 		pid_t childPid = fork();
+		finalChild = childPid;
 		totalChildren++;
 		runningChildren++;
 
@@ -58,7 +60,7 @@ int main(int argc, char** argv) {
 			}
 		}
 	}
-	wait(0);
+	pid_t waitForAllStop = waitpid(finalChild, NULL, 0);
 	printf("Parent is now ending.\n");
   	return EXIT_SUCCESS;
 }
