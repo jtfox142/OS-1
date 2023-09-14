@@ -12,8 +12,11 @@ void help() {
         printf("The value of proc determines the total number of child processes to be produced.\n");
 	printf("The value of simul determines the number of children that can run simultaneously.\n");
 	printf("The value of iter determines the number of times each child process will loop.\n");
+	printf("\nMADE BY JACOB (JT) FOX\n9/11/2023\n");
 	exit(1);
 }
+
+//void inputValidation(int flagValue, 
 
 int main(int argc, char** argv) {
 	int option;
@@ -21,18 +24,20 @@ int main(int argc, char** argv) {
 	int simul;
 	char *iter;
 	while ((option = getopt(argc, argv, "hn:s:t:")) != -1) {
+		int intarg;
+		intarg = atoi(optarg);
   		switch(option) {
    			case 'h':
     				help();
     				break;
    			case 'n':
-    				proc = atoi(optarg);
+    				intarg < 1 ? proc = 1 : (proc = intarg);
     				break;
    			case 's':
-				simul = atoi(optarg);
+				intarg < 1 ? simul = 1 : (simul = intarg);
 				break;
 			case 't':
-				iter = optarg;
+				iter = optarg; //figure out how to fix this shit, then update readme and -h with defaults.
 				break;
 		}
 	}
@@ -42,13 +47,7 @@ int main(int argc, char** argv) {
 	totalChildren = 0;
 	runningChildren = 0;
 
-	printf("proc: %d\n", proc);
-	printf("simul: %d\n", simul);
-	printf("iter: %s\n", iter);
-
-    	while(totalChildren < proc) {
-		printf("Running Children: %d\n", runningChildren);
-    
+    	while(totalChildren < proc) { 
 		pid_t childPid = fork();
 		finalChild = childPid;
 		totalChildren++;
@@ -65,8 +64,7 @@ int main(int argc, char** argv) {
 			}
 		}
 	}
-	pid_t waitForAllStop = waitpid(finalChild, NULL, 0);
-	printf("Parent is now ending.\n");
+	pid_t waitForAllStop = waitpid(finalChild, NULL, 0); //ensures parent doesn't end before final child
   	return EXIT_SUCCESS;
 }
 

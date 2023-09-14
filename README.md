@@ -17,4 +17,7 @@ An example entry would look like: "./oss -n 5 -s 3 -t 2".
 I do not know of any outstanding problems with my code. During my testing, it seemed to compile, run, and terminate just as it should.
 
 For a brief while, I had a small problem where certain flag inputs would cause the parent to terminate before the final child.
-I added a waitpid function at the end that looks for the final process id, and I haven't experienced any more trouble. 
+I added a waitpid function at the end that looks for the final process id, and I haven't experienced any more trouble.
+
+MADE BY JACOB (JT) FOX
+9/11/2023 
