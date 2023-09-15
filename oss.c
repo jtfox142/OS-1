@@ -12,32 +12,29 @@ void help() {
         printf("The value of proc determines the total number of child processes to be produced.\n");
 	printf("The value of simul determines the number of children that can run simultaneously.\n");
 	printf("The value of iter determines the number of times each child process will loop.\n");
-	printf("\nMADE BY JACOB (JT) FOX\n9/11/2023\n");
+	printf("\nMADE BY JACOB (JT) FOX\nSeptember 14th, 2023\n");
 	exit(1);
 }
-
-//void inputValidation(int flagValue, 
 
 int main(int argc, char** argv) {
 	int option;
 	int proc;
 	int simul;
 	char *iter;
+
 	while ((option = getopt(argc, argv, "hn:s:t:")) != -1) {
-		int intarg;
-		intarg = atoi(optarg);
   		switch(option) {
    			case 'h':
     				help();
     				break;
    			case 'n':
-    				intarg < 1 ? proc = 1 : (proc = intarg);
+    				proc = atoi(optarg); //Made these two params into integers to make comparisons simpler
     				break;
    			case 's':
-				intarg < 1 ? simul = 1 : (simul = intarg);
+				simul = atoi(optarg);
 				break;
 			case 't':
-				iter = optarg; //figure out how to fix this shit, then update readme and -h with defaults.
+				iter = optarg; //Kept this a char * so I could pass it easier
 				break;
 		}
 	}
@@ -49,7 +46,7 @@ int main(int argc, char** argv) {
 
     	while(totalChildren < proc) { 
 		pid_t childPid = fork();
-		finalChild = childPid;
+		finalChild = childPid; //Gets reassigned every time the loop runs. A sloppy but effective way to get the final child's pid
 		totalChildren++;
 		runningChildren++;
 
@@ -60,7 +57,7 @@ int main(int argc, char** argv) {
 		else{
 			if(runningChildren >= simul) {
 				wait(0);
-				runningChildren--;
+				runningChildren--; //R.I.P.
 			}
 		}
 	}

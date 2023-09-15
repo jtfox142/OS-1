@@ -20,4 +20,4 @@ For a brief while, I had a small problem where certain flag inputs would cause t
 I added a waitpid function at the end that looks for the final process id, and I haven't experienced any more trouble.
 
 MADE BY JACOB (JT) FOX
-9/11/2023 
+September 14th, 2023 
